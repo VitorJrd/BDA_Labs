@@ -40,6 +40,7 @@ SELECT * FROM vol;
 SELECT * FROM client;
 SELECT * FROM vol;
 
+-- T2 ne voit pas les modifications de T1 car elles ne sont pas validées
 
 -- ROLLBACK
 
@@ -119,10 +120,10 @@ ALTER SESSION SET ISOLATION_LEVEL = SERIALIZABLE;
 -- SESSION T2
 ALTER SESSION SET ISOLATION_LEVEL = SERIALIZABLE;
 
--- Refaire les mêmes opérations; Oracle peut rejeter une transaction (ORA-08177)
+-- Refaire les mêmes opérations; Oracle peut rejeter une transaction (ORA-08177) (cohérence en mode SERIALIZABLE)
 
 
 
 -- READ COMMITTED: pas de lecture sale mais incohérences possibles
 -- SERIALIZABLE: cohérence garantie mais rejet possible de transactions
--- Oracle utilise un mécanisme de contrôle de concurrence avancé
+-- Oracle ne correspond pas exactement à un verrouillage strict à deux phases. Il utilise un mécanisme basé sur la gestion des versions et le niveau d’isolation
